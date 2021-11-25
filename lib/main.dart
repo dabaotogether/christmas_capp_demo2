@@ -4,10 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 final assetsAudioPlayer = AssetsAudioPlayer();
-
+late AudioPlayer player;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LicenseRegistry.addLicense(() async* {
@@ -31,40 +32,54 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
+    player = AudioPlayer();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
+    player.dispose();
     super.dispose();
   }
-
-  AppLifecycleState? _notification;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
-        assetsAudioPlayer.open(Audio("audio/JingleBells.mp3"));
+        // assetsAudioPlayer.open(Audio("audio/JingleBells.mp3"));
+        playMusic();
         break;
       case AppLifecycleState.inactive:
-        assetsAudioPlayer.stop();
+        // assetsAudioPlayer.stop();
+        stopMusic();
         break;
       case AppLifecycleState.paused:
-        assetsAudioPlayer.stop();
+        // assetsAudioPlayer.stop();
+        stopMusic();
         break;
       case AppLifecycleState.detached:
-        assetsAudioPlayer.stop();
+        // assetsAudioPlayer.stop();
+        stopMusic();
 
         break;
     }
   }
 
+  void playMusic() async {
+    await player.setAsset("audio/canon.mp3");
+    player.play();
+  }
+
+  void stopMusic() async {
+    await player.stop();
+  }
+
   @override
   Widget build(BuildContext context) {
-    assetsAudioPlayer.open(
-      Audio("audio/canon.mp3"),
-    );
+    // assetsAudioPlayer.open(
+    //   Audio("audio/canon.mp3"),
+    // );
+    playMusic();
     return MaterialApp(
       title: 'My Love',
       debugShowCheckedModeBanner: false,

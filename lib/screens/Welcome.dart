@@ -49,13 +49,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 countdownCurrentColor: Colors.lightBlueAccent,
                 unit: CountdownUnit.second,
                 countdownTotal: 5,
+
                 onUpdated: (unit, remainingTime) {
                   if (remainingTime == 1) {
                     Navigator.push(
                         context,
                         PageTransition(
-                            duration: const Duration(milliseconds: 1000),
-                            type: PageTransitionType.fade,
+                            duration: const Duration(milliseconds: 1100),
+                            curve: Curves.ease,
+                            type: PageTransitionType.rotate,
+                            alignment: Alignment.center,
                             child: FirstScreen()));
                   }
                 },
