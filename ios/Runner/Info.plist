@@ -44,6 +44,8 @@
     <string>audio</string>
     </array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>To record and save voice recording</string>
 	<false/>
 </dict>
 </plist>
